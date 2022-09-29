@@ -1,0 +1,39 @@
+<configuration>
+    <variable name="APPENDER_NAME" value="${LOGGER_APPENDER_NAME:-jsonAppender}"/>
+    <variable name="APPLICATION" value="${APPLICATION_NAME:-benefit}"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="jsonAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+
+            <providers>
+                <arguments/>
+                <mdc/>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "logger_name": "%logger{0}",
+                        "thread_name": "%thread",
+                        "message": "%message",
+                        "correlation_id": "%X{correlation_id}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="${APPENDER_NAME}"/>
+    </root>
+
+</configuration>
