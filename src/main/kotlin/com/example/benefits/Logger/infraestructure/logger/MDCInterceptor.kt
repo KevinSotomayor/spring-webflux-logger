@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono
 import reactor.util.context.Context
 
 
+// Component disabled for facilitate test with CoroutineContext
 //@Component
 //@Order(Ordered.HIGHEST_PRECEDENCE)
 class MDCInterceptor : WebFilter {
@@ -23,7 +24,7 @@ class MDCInterceptor : WebFilter {
 
     @PostConstruct
     fun postConstruct() {
-        println("Bean MDCInterceptor")
+        println("Bean MDCInterceptor start")
     }
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {

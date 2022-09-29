@@ -33,6 +33,9 @@ private fun generateUniqueId() = UUID.randomUUID().toString()
 
 fun getContext(): MutableMap<String, String> = MDC.getCopyOfContextMap() ?: mutableMapOf()
 
+// https://github.com/reactor/reactor-core/blob/main/docs/asciidoc/faq.adoc#what-is-a-good-pattern-for-contextual-logging-mdc
+// Helper function around a single MDC variable and focused on logging onNext events, using Java 9 enhanced Optional API
+// *** No results from this test
 fun <T> logOnNext(logStatement: Consumer<T?>): Consumer<Signal<T>>? {
     println("LogOnNext 1 $logStatement")
     return Consumer { signal: Signal<T> ->

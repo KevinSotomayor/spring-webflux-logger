@@ -15,6 +15,7 @@ import reactor.core.publisher.Hooks
 import reactor.core.publisher.Operators
 import reactor.util.context.Context
 
+// Configuration commented in order to facilitate execution of CoroutineContext
 //@Configuration
 class MdcContextLifterConfiguration {
 
@@ -25,7 +26,7 @@ class MdcContextLifterConfiguration {
     @PostConstruct
     fun contextOperatorHook() {
         Hooks.onEachOperator(MDC_CONTEXT_REACTOR_KEY, Operators.lift { _, subscriber -> MdcContextLifter(subscriber) })
-        //Hooks.onEachOperator(MDC_CONTEXT_REACTOR_KEY, Operators.)
+        //Hooks.onEachOperator(MDC_CONTEXT_REACTOR_KEY, Operators.) // TODO implement call to MdcContextLifterPublisher
     }
 
     @PreDestroy
@@ -62,6 +63,7 @@ class MdcContextLifter<T>(private val coreSubscriber: CoreSubscriber<T>) : CoreS
     }
 }
 
+// TODO Implement way of subscribe to publisher instead of subscriber in order to keep MDC, future test
 class MdcContextLifterPublisher<T> (private val corePublisher: CorePublisher<T>): CorePublisher<T>{
     override fun subscribe(s: Subscriber<in T>?) {
         TODO("Not yet implemented")
@@ -81,7 +83,7 @@ private fun Context.copyToMdc() {
         val map: Map<String, String> = this.stream()
             .collect(Collectors.toMap({ e -> e.key.toString() }, { e -> e.value.toString() }))
 
-        //println("Context copy tomdc, $map, ${Thread.currentThread().id}")
+        println("Context copy tomdc, $map, ${Thread.currentThread().id}")
         MDC.setContextMap(map)
     } else {
         println("Cleaning MDC  ${Thread.currentThread().id}, ${LocalDateTime.now()}, ${this.hashCode()}")

@@ -1,18 +1,12 @@
 package com.example.benefits.Logger.application
 
-import com.example.benefits.Logger.domain.Student
 import com.example.benefits.Logger.infraestructure.setup.Logger
-import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 
 @Service
-class GetStudentsServiceSergio(
+class GetStudentsServiceCoroutineContext(
     private val logger: Logger
 ) {
     suspend operator fun invoke() {
