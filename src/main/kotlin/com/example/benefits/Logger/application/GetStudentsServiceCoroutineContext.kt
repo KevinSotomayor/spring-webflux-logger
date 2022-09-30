@@ -1,6 +1,7 @@
 package com.example.benefits.Logger.application
 
 import com.example.benefits.Logger.infraestructure.setup.Logger
+import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.delay
 import org.springframework.stereotype.Service
@@ -14,11 +15,11 @@ class GetStudentsServiceCoroutineContext(
     }
 
     suspend fun getStudentsFromServer() {
-        logger.info("Starting getStudentsFromServer")
+        logger.info("Starting getStudentsFromServer [HASH: ${coroutineContext.hashCode()}]")
         getDelay()
         delay(800)
         logger.info("Ending getStudentsFromServer")
-        println("inside getStudentsFromServer ... with ${kotlin.coroutines.coroutineContext[CoroutineName]?.name}")
+        println("inside getStudentsFromServer ... [HASH: ${coroutineContext.hashCode()}]")
     }
 
     suspend fun getDelay() {

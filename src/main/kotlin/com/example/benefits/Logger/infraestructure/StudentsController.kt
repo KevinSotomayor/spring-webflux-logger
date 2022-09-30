@@ -6,6 +6,7 @@ import com.example.benefits.Logger.application.GetStudentsServiceCoroutineContex
 import com.example.benefits.Logger.domain.Student
 import com.example.benefits.Logger.infraestructure.aspect.LogHandler
 import com.example.benefits.Logger.infraestructure.setup.Logger
+import kotlin.coroutines.coroutineContext
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -43,10 +44,10 @@ class StudentsController(
     @LogHandler
     @GetMapping(path = ["/students-coroutine-context"])
     suspend fun getStudentsSergio(): ResponseEntity<String> {
-        logger.info("Controller start -> ${Thread.currentThread().id}")
+        logger.info("Controller start -> ${Thread.currentThread().id} [HASH: ${coroutineContext.hashCode()}]")
         getStudentsSergioService()
 
-        logger.info("Controller finish -> ${Thread.currentThread().id}")
+        logger.info("Controller finish -> ${Thread.currentThread().id} [HASH: ${coroutineContext.hashCode()}]")
         return ResponseEntity.ok().body("ok")
     }
 

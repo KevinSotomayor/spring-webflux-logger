@@ -76,7 +76,6 @@ class MdcContextLifterPublisher<T> (private val corePublisher: CorePublisher<T>)
 
  // Extension function for the Reactor [Context]. Copies the current context to the MDC, if context is empty clears the MDC.
  // State of the MDC after calling this method should be same as Reactor [Context] state.
-
 private fun Context.copyToMdc() {
     //println(" hash -> ${this.hashCode()}")
     if (!this.getOrEmpty<String>("correlation_id").isEmpty) {
