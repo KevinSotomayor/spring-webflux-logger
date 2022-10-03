@@ -22,7 +22,6 @@ class CorrelationIdAspect {
     @Around("@annotation(com.example.benefits.Logger.infraestructure.aspect.LogHandler)")
     fun logWithCorrelationId(joinPoint: ProceedingJoinPoint) =
         runBlocking{
-            println("Running...")
             withContext(CoroutineName(UUID.randomUUID().toString())) {
                 println("Running... with ${kotlin.coroutines.coroutineContext[CoroutineName]?.name}")
                 joinPoint.proceed()
